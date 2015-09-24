@@ -4,7 +4,7 @@
 var express = require('express');
 var params = require('express-params');
 
-//var beers = require('./controllers/bearController');
+//var beers = require('./controllers/bearsController');
 
 var router = express.Router();
 params.extend(router);
