@@ -1,34 +1,41 @@
 /**
+ *  (c) copyright 2015. TableSafe, Inc.  All rights reserved.
+ *
  * Created by byuan on 9/23/2015.
  */
 
-var couchbase = require('couchbase');
+var debug = require('debug')('beer-sample');
+var express = require('express');
+var bodyParser = require('body-parser');
+var configs = require('./appstart/configs');
 
-// connect to couchbase server
-var cluster = new couchbase.Cluster('couchbase://localhost');
-var bucket = cluster.openBucket('beer-sample', function(err) {
-    if (err) {
-        throw err;
-    }
+var argv = require('minimist')(process.argv.slice(2));
+
+var app = express();
+
+// use bodyParser to parse json
+app.use(bodyParser.json());
+
+// use bodyParser to parse URL UTF-8 encoded body
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
+
+// specify default error handler
+app.use(errorHandler);
+
+function errorHandler(err, req, res, next) {
+    res.status(err.status).json(err);
+}
+
+var router = require('./router');
+app.use('/', router);
+
+app.set('port', configs.port);
+
+var server = app.listen(app.get('port'), function() {
+    configs.startTime = new Date();
+    debug('beer-Sample server listening on port ' + server.address().port);
 });
 
-// retrieve a document
-bucket.get('21st-amendment_brewery_cafe', function(err, result) {
-    if (err) {
-        throw err;
-    }
-
-    var doc = result.value;
-    console.log(doc.name + ', ABV: ' + doc.abv);
-});
-
-//myBucket.get('21st-amendment_brewery_cafe', function(err, res) {
-//    console.log('Value: ', res.value);
-//});
-var query = ViewQuery.from('beer-sample', 'name').skip(6).limit(3);
-myBucket.query(query, function(err, results) {
-    for(i in results) {
-        console.log('Row:', results[i]);
-    }
-});
 
