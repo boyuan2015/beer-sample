@@ -1,6 +1,11 @@
 /**
- * Created by byuan on 9/24/2015.
+ *  (c) copyright 2015. TableSafe, Inc.  All rights reserved.
+ *
+ * Created by byuan on 9/23/2015.
  */
+
+// Description
+// ?? How to specify and apply ip address for the server
 
 var _port = 3000;
 var _dbip = 'localhost';

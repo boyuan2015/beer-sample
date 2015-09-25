@@ -4,6 +4,14 @@
  * Created by byuan on 9/23/2015.
  */
 
+// Description
+//    (1) handle arguments
+//    (2) define parsers
+//    (3) specify default error handler
+//    (4) specify root route handler
+//    (5) specify port
+//    (6) start server
+
 var debug = require('debug')('beer-sample');
 var express = require('express');
 var bodyParser = require('body-parser');
