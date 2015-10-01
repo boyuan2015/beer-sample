@@ -28,8 +28,6 @@ router.param(function(name, fn) {
 // regex for parameter validation
 router.param('doc', /^.+$/);
 
-var Beer = require('../models/beer');
-
 // TODO: query argument validation
 
 router.route('/::doc')
