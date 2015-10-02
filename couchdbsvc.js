@@ -120,14 +120,43 @@ CouchDbSvc.prototype.removeBucket = function (bucketName, callback) {
 //----------------------------------------------
 // Bucket/Bucket Collection API
 //----------------------------------------------
-//CouchDbSvc.prototype.insertDocument(bucket, key, value, callback) {
-//    bucket.insert('' + key, value, function (err, data) {
-//        if (error) {
-//            return callback(error);
-//        }
-//        result.value = key;
-//        return callback(null, result);
-//    });
-//}
+// NOTE: tested, works, BUT, may be the option settings need modification !!!
+CouchDbSvc.prototype.getDocument = function (bucket, key, callback) {
+    var undefined;
+    var options = {};
+    options.hashkey = undefined;
+    bucket.get(key, options, function (error, result) {
+        if (error) {
+            return callback(error);
+        } else {
+            return callback(null, result);
+        }        
+    });
+}
+
+// NOTE: tested, works, BUT, may be the option settings need modification !!!
+CouchDbSvc.prototype.deleteDocument = function (bucket, key, callback) {
+    var undefined;
+    var options = {};
+    options.hashkey = undefined;
+    bucket.remove(key, options, function (error, result) {
+        if (error) {
+            return callback(error);
+        } else {
+            return callback(null, result);
+        }
+    });
+}
+
+// NOTE: tested, works
+CouchDbSvc.prototype.insertDocument = function (bucket, key, value, callback) {
+    bucket.insert('' + key, value, function (error, result) {
+        if (error) {
+            return callback(error);
+        }
+        result.value = key;
+        return callback(null, result);
+    });
+}
 
 module.exports = CouchDbSvc;
